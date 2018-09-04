@@ -8,6 +8,8 @@ fi
 # zsh and fonts
 apt-get update
 apt-get install -y zsh powerline fonts-powerline
+# htop
+apt-get install -y htop
 
 # The rest of the file shouldn't run escalated. sudo to the original caller account
 if [ $SUDO_USER ]; then
