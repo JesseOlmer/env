@@ -38,3 +38,21 @@ if [ -t 1 ]; then
   exec zsh
 fi
 EOT
+
+# gnome clipboard manager extension
+sudo -u git clone https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator.git ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com
+pushd ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com
+sudo -u gnome-shell-extension-tool -e clipboard-indicator@tudmotu.com
+sudo -u glib-compile-schemas schemas
+sudo -u gsettings --schemadir schemas set org.gnome.shell.extensions.shelltile gap-between-windows 3
+popd
+
+# shell tiling extension
+sudo -u git clone https://github.com/emasab/shelltile.git ~/.local/share/gnome-shell/extensions/ShellTile@emasab.it
+pushd ~/.local/share/gnome-shell/extensions/ShellTile@emasab.it
+sudo -u gnome-shell-extension-tool -e ShellTile@emasab.it
+sudo -u glib-compile-schemas schemas
+sudo -u gsettings --schemadir schemas set org.gnome.shell.extensions.clipboard-indicator toggle-menu "['<Ctrl>grave']"
+sudo -u gsettings --schemadir schemas set org.gnome.shell.extensions.clipboard-indicator notify-on-copy false
+popd
+
