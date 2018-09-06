@@ -65,6 +65,7 @@ ZSH_THEME="agnoster"
 plugins=(
   git
   history
+  kubectl
   sudo
 )
 
