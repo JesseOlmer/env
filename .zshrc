@@ -100,6 +100,18 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+kube_port_forward() {
+  kubectl port-forward -n "$@" &
+}
+
+alias kpf="kube_port_forward"
+
+kube_exec_shell() {
+  kubectl exec -it $1 -- /bin/ash
+}
+
+alias ksh="kube_exec_shell"
+
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
   source /etc/profile.d/vte.sh
 fi
