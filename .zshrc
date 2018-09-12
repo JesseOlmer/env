@@ -112,6 +112,8 @@ kube_exec_shell() {
 
 alias ksh="kube_exec_shell"
 
+alias ag="alias | grep"
+
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
   source /etc/profile.d/vte.sh
 fi
