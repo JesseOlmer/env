@@ -100,6 +100,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+
 kube_port_forward() {
   kubectl port-forward -n "$@" &
 }
