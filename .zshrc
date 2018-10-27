@@ -8,7 +8,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster"
+#ZSH_THEME="agnoster"
+ZSH_THEME="jesse-agnoster"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -91,6 +92,8 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
+export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -100,21 +103,16 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
-
-kube_port_forward() {
-  kubectl port-forward -n "$@" &
-}
-
-alias kpf="kube_port_forward"
-
-kube_exec_shell() {
+ksh() {
   kubectl exec -it $1 -- /bin/ash
 }
 
-alias ksh="kube_exec_shell"
-
 alias ag="alias | grep"
+
+cloudctx() {
+  kubectx $1
+  gcloud config set project $1
+}
 
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
   source /etc/profile.d/vte.sh

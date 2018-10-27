@@ -65,6 +65,10 @@ fi
 EOT
 }
 
+function addzshtheme {
+	cp ./jesse-agnoster.zsh-theme ~/.oh-my-zsh/themes/
+}
+
 if [ $SUDO_USER ]; then
     real_user=$SUDO_USER
 else
@@ -75,4 +79,5 @@ sudo ./elevatedsteps.sh
 installohmyzsh
 installclipboardmgr
 installshelltile
+addzshtheme
 addzshtobashrc
