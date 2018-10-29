@@ -51,6 +51,18 @@ function installshelltile {
 	popd > /dev/null
 }
 
+function installremovedropdownarrows {
+	if [ -d ~/.local/share/gnome-shell/extensions/remove-dropdown-arrows@mpdeimos.com ]; then
+		echo "Remove Dropdown Arrows already installed. Skipping"
+		return 0
+	fi
+	echo "Installing Remove Dropdown Arrows"
+	git clone https://github.com/mpdeimos/gnome-shell-remove-dropdown-arrows.git ~/.local/share/gnome-shell/extensions/remove-dropdown-arrows@mpdeimos.com > /dev/null
+	pushd ~/.local/share/gnome-shell/extensions/remove-dropdown-arrows@mpdeimos.com > /dev/null
+	gnome-shell-extension-tool -e remove-dropdown-arrows@mpdeimos.com
+	popd > /dev/null
+}
+
 function addzshtobashrc {
 	grep -Pzoq 'if \[ -t 1 ]; then\n  exec zsh\nfi' ~/.bashrc
 	if [ $? -eq 0 ]; then
@@ -79,5 +91,6 @@ sudo ./elevatedsteps.sh
 installohmyzsh
 installclipboardmgr
 installshelltile
+installremovedropdownarrows
 addzshtheme
 addzshtobashrc
