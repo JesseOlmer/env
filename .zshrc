@@ -92,8 +92,6 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
-
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -103,15 +101,25 @@ export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias ag="alias | grep"
+
 ksh() {
   kubectl exec -it $1 -- /bin/ash
 }
 
-alias ag="alias | grep"
+function helm-core-env() {
+  /opt/helm/helm "${@:2}" --kube-context "$1" --tls --tls-ca-cert ~/.helm/$1-ca.cert.pem --tls-cert ~/.helm/$1-helm.cert.pem --tls-key ~/.helm/$1-helm.key.pem
+}
+
+function helm() {
+  cloudenv=$(<~/.helm/current-context)
+  helm-core-env $cloudenv "$@"
+}
 
 cloudctx() {
   kubectx $1
   gcloud config set project $1
+  echo $1 > ~/.helm/current-context
 }
 
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
