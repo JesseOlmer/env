@@ -81,6 +81,11 @@ function addzshtheme {
 	cp ./jesse-agnoster.zsh-theme ~/.oh-my-zsh/themes/
 }
 
+function vimrcandplugins {
+	cp ./.vimrc ~/
+	curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+}
+
 if [ $SUDO_USER ]; then
     real_user=$SUDO_USER
 else
@@ -94,3 +99,5 @@ installshelltile
 installremovedropdownarrows
 addzshtheme
 addzshtobashrc
+vimrcandplugins
+
