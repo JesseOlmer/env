@@ -122,6 +122,8 @@ cloudctx() {
   echo $1 > ~/.helm/current-context
 }
 
+alias ppjson="python -m json.tool"
+
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
   source /etc/profile.d/vte.sh
 fi
