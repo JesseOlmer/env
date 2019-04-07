@@ -67,6 +67,7 @@ plugins=(
   git
   history
   kubectl
+  microk8s
   sudo
 )
 

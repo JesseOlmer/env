@@ -63,6 +63,15 @@ function installremovedropdownarrows {
 	popd > /dev/null
 }
 
+function addmicrok8scompletion {
+	mkdir ~/.oh-my-zsh/plugins/microk8s
+	cp ./microk8s.plugin.zsh ~/.oh-my-zsh/plugins/microk8s/
+}
+
+function enablemicrok8sdns {
+	microk8s.enable dns
+}
+
 function addzshtobashrc {
 	grep -Pzoq 'if \[ -t 1 ]; then\n  exec zsh\nfi' ~/.bashrc
 	if [ $? -eq 0 ]; then
@@ -97,6 +106,8 @@ installohmyzsh
 installclipboardmgr
 installshelltile
 installremovedropdownarrows
+addmicrok8scompletion
+enablemicrok8sdns
 addzshtheme
 addzshtobashrc
 vimrcandplugins

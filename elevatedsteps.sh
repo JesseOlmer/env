@@ -18,6 +18,11 @@ function installhtop {
 	apt-get install -y htop > /dev/null
 }
 
+function installmicrok8s {
+	snap install microk8s --classic
+}
+
 requireroot
 installzsh
 installhtop
+installmicrok8s
