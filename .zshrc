@@ -67,54 +67,23 @@ plugins=(
   git
   history
   kubectl
-  microk8s
   sudo
 )
+
+if [ "$(uname 2> /dev/null)" '==' "Darwin" ]; then
+  plugins+=(helm)
+elif [ "$(uname 2> /dev/null)" '==' "Linux" ]; then
+  plugins+=(microk8s)
+fi
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-alias ag="alias | grep"
+export ClusterMode=Local
 
 ksh() {
   kubectl exec -it $1 -- /bin/ash
-}
-
-function helm-core-env() {
-  /opt/helm/helm "${@:2}" --kube-context "$1" --tls --tls-ca-cert ~/.helm/$1-ca.cert.pem --tls-cert ~/.helm/$1-helm.cert.pem --tls-key ~/.helm/$1-helm.key.pem
-}
-
-function helm() {
-  cloudenv=$(<~/.helm/current-context)
-  helm-core-env $cloudenv "$@"
 }
 
 cloudctx() {
@@ -123,9 +92,32 @@ cloudctx() {
   echo $1 > ~/.helm/current-context
 }
 
+alias ag="alias | grep"
 alias ppjson="python -m json.tool"
+alias k="kubectl"
+alias seq="docker run -d --restart unless-stopped --name seq -e ACCEPT_EULA=Y -p 5341:5341 -p 539:80 datalust/seq:latest && echo 'Ingestion on http://localhost:5341, Portal on http://localhost:539'"
+
+if [ "$(uname 2> /dev/null)" '==' "Darwin" ]; then
+  alias subl="open -a Sublime\ Text"
+  alias rider="open -a Rider"
+  alias code="open -a Visual\ Studio\ Code"
+
+  export P4CONFIG=".p4settings"
+
+  export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+  # The next line updates PATH for the Google Cloud SDK.
+  if [ -f '/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/google-cloud-sdk/path.zsh.inc'; fi
+
+  # The next line enables shell command completion for gcloud.
+  if [ -f '/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/google-cloud-sdk/completion.zsh.inc'; fi
+fi
 
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
   source /etc/profile.d/vte.sh
 fi
 
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
